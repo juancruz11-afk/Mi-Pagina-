@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="">
+    <link rel="stylesheet" href="style/mystyle.css">
+    <title>My Sale</title>
+</head>
+<body>
+    <header class="site-init">
+        <h1>Sale of car cleaning products</h1>
+        <p><span>You will find the best for car cleaning here</span></p>
+    </header>
+
+    <!-- ícono carrito -->
+    <div class="cart-icon" id="cartIcon">🛒<span id="cart-count">0</span></div>
+
+    <!-- overlay -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- panel carrito -->
+    <div class="cart-panel" id="cartPanel">
+        <button class="close-cart" id="closeCart">✖</button>
+        <h2>Shopping Cart</h2>
+        <ul id="cart"></ul>
+        <p><strong>Total:</strong> $<span id="total">0.00</span></p>
+    </div>
+
+    <main class="site-main">
+        <section class="sale-of-products">
+        <h2>Interior Products</h2>
+        <section class="product">
+            <div class="product-left">
+            <h4>Armor All Original Spray Protector, 473 ml, White</h4>
+            <p>Helps renew and revitalize vinyl, rubber and plastic</p>
+            <img src="https://m.media-amazon.com/images/I/91LLEtGNfGL.jpg" alt="Armor All">
+            <p>It's recommended to apply the protectant regularly for maximum protection and restoration. With Armor All's spray protectant, your car will shine while you protect it.</p>
+            </div>
+            <div class="product-right">
+            <h3>$9.99</h3>
+            <button class="add-to-cart" data-name="Armor All Original Spray Protector" data-price="9.99">Add to Cart</button>
+            </div>
+        </section>
+
+        <h2>Exterior Products</h2>
+        <section class="product">
+            <div class="product-left">
+            <h4>Extreme Shield™ + Ceramic Car Wash</h4>
+            <p>Remove dirt and achieve a long-lasting shine</p>
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_883386-MLU74236866211_012024-F.webp" alt="Ceramic Car Wash">
+            <p>Use when the car is cool, preferably in the shade. Do not allow the formula to dry on the vehicle's surface.</p>
+            </div>
+            <div class="product-right">
+            <h3>$13.15</h3>
+            <button class="add-to-cart" data-name="Extreme Shield Ceramic Car Wash" data-price="13.15">Add to Cart</button>
+            </div>
+        </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 My Sale. All rights reserved Juan Carlos Cruz Hernandez.</p>
+    </footer>
+
+    <!-- javascript del carrito -->
+    <script>    
+        let cart = [];
+        let total = 0;
+
+        const buttons = document.querySelectorAll(".add-to-cart");
+        const cartList = document.getElementById("cart");
+        const totalElement = document.getElementById("total");
+        const cartCount = document.getElementById("cart-count");
+
+        const cartIcon = document.getElementById("cartIcon");
+        const cartPanel = document.getElementById("cartPanel");
+        const closeCart = document.getElementById("closeCart");
+        const cartOverlay = document.getElementById("cartOverlay");
+
+        // abrir carrito
+        cartIcon.addEventListener("click", () => {
+        cartPanel.classList.add("active");
+        cartOverlay.classList.add("active");
+        cartIcon.style.display = "none";
+        });
+
+        // cerrar carrito
+        function closeCartPanel() {
+        cartPanel.classList.remove("active");
+        cartOverlay.classList.remove("active");
+        cartIcon.style.display = "flex";
+        }
+
+        closeCart.addEventListener("click", closeCartPanel);
+        cartOverlay.addEventListener("click", closeCartPanel);
+
+        // agregar productos
+        buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const name = button.getAttribute("data-name");
+            const price = parseFloat(button.getAttribute("data-price"));
+            cart.push({ name, price });
+            total += price;
+            renderCart();
+        });
+        });
+
+        function renderCart() {
+        cartList.innerHTML = "";
+        cart.forEach(item => {
+            let li = document.createElement("li");
+            li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+            cartList.appendChild(li);
+        });
+        totalElement.textContent = total.toFixed(2);
+        cartCount.textContent = cart.length;
+        }
+    </script>
+</body>
+</html>
